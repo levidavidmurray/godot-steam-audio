@@ -9,6 +9,14 @@
 #include <algorithm>
 #include <godot_cpp/variant/utility_functions.hpp>
 
+void SteamAudioServer::save_scene_as_obj(const String &path) {
+	if (!self->is_global_state_init.load()) {
+		return;
+	}
+	SteamAudio::log(SteamAudio::log_info, "Saving SteamAudioServer scene to OBJ file");
+	iplSceneSaveOBJ(self->global_state.scene, path.utf8().get_data());
+}
+
 void SteamAudioServer::tick() {
 	if (Engine::get_singleton()->is_editor_hint()) {
 		return;
@@ -301,6 +309,7 @@ SteamAudioServer::~SteamAudioServer() {
 
 void SteamAudioServer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("tick"), &SteamAudioServer::tick);
+	ClassDB::bind_method(D_METHOD("save_scene_as_obj", "path"), &SteamAudioServer::save_scene_as_obj);
 	ClassDB::bind_static_method("SteamAudioServer", D_METHOD("get_singleton"),
 			&SteamAudioServer::get_singleton);
 }

@@ -54,6 +54,7 @@ public:
 	void remove_static_mesh(IPLStaticMesh mesh);
 
 	void tick();
+	void save_scene_as_obj(const String &path);
 };
 
 #endif // STEAM_AUDIO_SERVER_H
